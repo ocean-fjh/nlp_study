@@ -1,0 +1,48 @@
+﻿*************
+* ltp-cloud *
+*************
+------------------------------------------------------------------------
+步骤：
+
+url_get_base = 'http://api.ltp-cloud.com/analysis?'
+api_key = 'your_key'
+format0 = 'plain'
+pattern = 'dp'
+
+text='your_text'
+text=parse.quote(text)
+
+result=request.urlopen("%sapi_key=%s&text=%s&format=%s&pattern=%s" % (url_get_base, api_key, text, format0, pattern))
+content=result.read().decode('utf-8')
+print(content)
+------------------------------------------------------------------------
+API参数名	含义									说明
+
+api_key		用户注册语言云服务后获得的认证标识	
+
+text		待分析的文本。								请以UTF-8格式编码，GET方式最大10K，POST方式最大20K
+
+pattern		用以指定分析模式，可选值包括ws(分词)，pos(词性标注)，
+		ner(命名实体识别)，dp(依存句法分析)，sdp(语义依存(树)分析)，
+		sdb_graph(语义依存图分析)srl(语义角色标注),all(全部任务)		plain格式中不允许指定全部任务
+
+format		用以指定结果格式类型，可选值包括xml(XML格式)，json(JSON格式)，		在指定pattern为all条件下，指定format为xml或json，
+		conll(CONLL格式)，plain(简洁文本格式)					返回结果将包含sdp结果，但conll格式不会包含sdp结果；
+
+xml_input	用以指定输入text是否是xml格式，可选值为false(默认值),true		仅限POST方式, 详见重要说明-自定义分词
+
+has_key		用以指定json结果中是否含有键值，
+		可选值包括true(含有键值，默认)，false(不含有键值)			配合format=json使用
+
+only_ner	用以指定plain格式中是否只需要ner列表，可选值包括false(默认值)和true	配合pattern=ner&format=plain使用
+
+callback	用以指定JavaScript调用中所使用的回调函数名称				配合format=json使用
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
